@@ -1,0 +1,6 @@
+name,company_name,phone,email,address,landmark,website,industry_type,service_type,call_type,schedule_date,status
+John Doe,TechCorp,+1234567890,johndoe@techcorp.com,123 Main St,City Center,www.techcorp.com,IT,Consulting,follow-up,2025-02-01,Pending
+Jane Smith,HealthPro,+1987654321,janesmith@healthpro.com,456 Elm St,Near Park,www.healthpro.com,Healthcare,Advisory,warm-call,2025-02-02,In Progress
+Michael Johnson,BuildIt,+1472583690,mjohnson@buildit.com,789 Pine St,Industrial Zone,www.buildit.com,Construction,Development,hot-call,2025-02-03,Follow-Up
+Emily Davis,MarketMakers,+1123581321,emilyd@marketmakers.com,159 Oak St,Uptown,www.marketmakers.com,Marketing,SEO,archive,2025-02-04,Closed
+

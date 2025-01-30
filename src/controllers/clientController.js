@@ -1,4 +1,4 @@
-const clientService = require('../service/clientService');
+const clientService = require('../services/client-service');
 
 class ClientController {
   async createClient(req, res) {
@@ -45,6 +45,38 @@ class ClientController {
       res.status(404).json({ error: error.message });
     }
   }
+  async addRemark(req, res) {
+    try {
+      const { id } = req.params; // Client ID
+      const { comment } = req.body; // Remark details
+  
+      if (!comment) {
+        return res.status(400).json({ error: 'Comment is required' });
+      }
+  
+      const remark = {
+        comment,
+        date: new Date(),
+      };
+  
+      const updatedClient = await clientService.addRemark(id, remark);
+      res.status(200).json(updatedClient);
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ error: error.message });
+    }
+  }
+  // Get all remarks for a particular client sorted by date (ascending order)
+  async getAllRemarks(req, res) {
+    try {
+      const clientId = req.params.id;
+      const remarks = await clientService.getAllRemarks(clientId);
+      res.status(200).json(remarks);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
 }
 
 module.exports = new ClientController();

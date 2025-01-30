@@ -12,13 +12,13 @@ const startAndStop = ()=>{
     // app.use(bodyParser.json());
     app.use(express.json());
     app.use(cors({
-        origin: 'http://localhost:5173', 
+        origin: 'https://dev.webbixel.com', 
         credentials: true,
     }));
 
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use('/api', apiRoutes),
-    connectDB(); // Connect to the database 
+    app.use('/api/v1/', apiRoutes),
+    connectDB(); 
     app.listen(PORT, ()=>{
         console.log(`Server listening on port ${PORT}`);
     });

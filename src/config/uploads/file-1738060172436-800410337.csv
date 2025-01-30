@@ -1,0 +1,5 @@
+"name,company_name,phone,email,address,industry_type,service_type,call_type,remarks,schedule_date,status"
+"Arnab,vais,854556216,trump@us.gov,washington,it,consult,archive,sdwdede,2025-01-02,Pending"
+"John,TechCorp,987654321,john@techcorp.com,1234 Silicon Valley,technology,development,hot-call,looking to partner,2025-02-10,In Progress"
+"Jane,Webbix,123456789,jane@webbix.com,42 Web Street,marketing,consult,follow-up,waiting for response,2025-01-30,Follow-Up"
+"Doe,InnovateInc,555666777,doe@innovateinc.com,789 Innovation Blvd,software,design,warm-call,exploring new projects,2025-03-15,Closed"

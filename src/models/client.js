@@ -9,10 +9,6 @@ const remarkSchema = new mongoose.Schema({
       type: Date,
       default: Date.now,
   },
-  added_by: {
-      type: String, 
-      required: true,
-  },
 });
 
 
@@ -64,18 +60,10 @@ const clientSchema = new mongoose.Schema({
       type: Date,
       default: null,
   },
-  last_followup: {
-      type: Date, // Tracks last follow-up date
-      default: null,
-  },
   status: {
       type: String,
       enum: ['Pending', 'In Progress', 'Follow-Up', 'Closed'],
       default: 'Pending',
-  },
-  updated_by: {
-      type: mongoose.Schema.Types.ObjectId,  // Reference to Staff collection
-      ref: 'Staff',
   },
   customer_id: {
       type: String, 
@@ -85,4 +73,4 @@ const clientSchema = new mongoose.Schema({
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
 
-module.exports = mongoose.model('Client', clientSchema);
+module.exports = mongoose.model('Clients', clientSchema);

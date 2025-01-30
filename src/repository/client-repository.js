@@ -7,11 +7,11 @@ class ClientRepository {
     }
   
     async getAllClients() {
-      return await Client.find().populate('updated_by');
+      return await Client.find();
     }
   
     async getClientById(clientId) {
-      return await Client.findById(clientId).populate('updated_by');
+      return await Client.findById(clientId);
     }
   
     async updateClient(clientId, updateData) {
@@ -21,7 +21,16 @@ class ClientRepository {
     async deleteClient(clientId) {
       return await Client.findByIdAndDelete(clientId);
     }
+    async addRemark(clientId, remark) {
+      return await Client.findByIdAndUpdate(
+        clientId,
+        { $push: { remarks: remark } },
+        { new: true }
+      );
+    }
+    
   }
+  
   
   module.exports = new ClientRepository();
   

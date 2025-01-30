@@ -1,0 +1,9 @@
+name,Company Name,Phone,Email,Address,Industry Type,Service Type,Call Type,Remarks,WhatsApp,Actions
+Michael Johnson,BuildIt,"'+1472583690",mjohnson@buildit.com,789 Pine St,Construction,Development,hot-call,,"'+1472583690",
+John Doe,TechCorp,"'+1234567890",johndoe@techcorp.com,123 Main St,IT,Consulting,follow-up,,"'+1234567890",
+Jane Smith,HealthPro,"'+1987654321",janesmith@healthpro.com,456 Elm St,Healthcare,Advisory,warm-call,,"'+1987654321",
+John Doe,TechCorp,1234567890,johndoe@techcorp.com,123 Main St,IT,Consulting,warm-call,,1234567890,
+Emily Davis,MarketMakers,1123581321,emilyd@marketmakers.com,159 Oak St,Marketing,SEO,warm-call,,1123581321,
+Michael Johnson,BuildIt,1472583690,mjohnson@buildit.com,789 Pine St,Construction,Development,warm-call,,1472583690,
+Jane Smith,HealthPro,1987654321,janesmith@healthpro.com,456 Elm St,Healthcare,Advisory,warm-call,,1987654321,
+Dummy,dummy llc,1234567890,dummmy@techcorp.com,123 Main St,dummy,dummy,warm-call,,1234567890,
