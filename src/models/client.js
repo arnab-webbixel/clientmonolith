@@ -24,6 +24,7 @@ const clientSchema = new mongoose.Schema({
   phone: {
       type: String,
       required: true,
+      unique: true
   },
   email: {
       type: String,
@@ -70,7 +71,7 @@ const clientSchema = new mongoose.Schema({
      default : null
   }
 }, {
-  timestamps: true, // Automatically adds createdAt and updatedAt fields
+  timestamps: true, 
 });
 
 module.exports = mongoose.model('Clients', clientSchema);

@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {PORT} = require('./config/server-config');
 const apiRoutes = require('./routes/clientRoutes');
+const emailRoutes = require('./routes/upload.routes');
+const pipelineRoutes = require('./routes/pipeline.routes');
 const connectDB = require('./config/db');
 const cors = require('cors');
-
+// require('./utils/consumer');
 
 const startAndStop = ()=>{
    try {
@@ -12,12 +14,15 @@ const startAndStop = ()=>{
     // app.use(bodyParser.json());
     app.use(express.json());
     app.use(cors({
-        origin: 'https://dev.webbixel.com', 
+        origin: ['https://dev.webbixel.com', 'http://localhost:5173'], 
         credentials: true,
     }));
 
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use('/api/v1/', apiRoutes),
+    
+    app.use('/api/v1/pipelines', pipelineRoutes);
+    app.use('/api/v1/', apiRoutes);
+    app.use('/api/v1/email', emailRoutes);
     connectDB(); 
     app.listen(PORT, ()=>{
         console.log(`Server listening on port ${PORT}`);

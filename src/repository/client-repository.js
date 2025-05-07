@@ -15,6 +15,7 @@ class ClientRepository {
     }
   
     async updateClient(clientId, updateData) {
+      updateData.updatedAt = new Date();
       return await Client.findByIdAndUpdate(clientId, updateData, { new: true });
     }
   
@@ -24,9 +25,16 @@ class ClientRepository {
     async addRemark(clientId, remark) {
       return await Client.findByIdAndUpdate(
         clientId,
-        { $push: { remarks: remark } },
+        { $push: { remarks: remark } ,
+        $set: { updatedAt: new Date() }
+        },
         { new: true }
       );
+    }
+    async clientFilter (filters){
+      return Client.find(filters)
+    .sort({ updatedAt: -1 })
+    .limit(100);
     }
     
   }

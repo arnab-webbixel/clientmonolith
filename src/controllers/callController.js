@@ -26,6 +26,36 @@ const getCallCounts = async (req, res) => {
     }
 };
 
+/**
+ * GET /api/v1/updates/count
+ * Returns the count of clients that have been updated (i.e. updatedAt > createdAt).
+ * 
+ **/
+const getUpdatedClientsCount = async (req, res) => {
+    try {
+      const count = await callService.getUpdatedClientsCount();
+      return res.status(200).json({ updatedClientsCount: count });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };
+
+
+
+/**
+ * GET /api/clients/updates/grouped
+ * Returns updated clients grouped by the day they were updated.
+ */
+const getUpdatedClientsGroupedByDate = async (req, res) => {
+    try {
+      const groupedData = await callService.getUpdatedClientsGroupedByDate();
+      return res.status(200).json({ updatedClientsByDate: groupedData });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  };  
 module.exports = {
     getCallCounts,
+    getUpdatedClientsCount,
+    getUpdatedClientsGroupedByDate
 };

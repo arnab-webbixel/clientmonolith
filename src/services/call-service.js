@@ -10,6 +10,15 @@ const getCallCounts = async (period) => {
     }
 };
 
+const getUpdatedClientsCount = async () => {
+    return await callRepository.getUpdatedClientsCount();
+};
+
+const getUpdatedClientsGroupedByDate = async () => {
+    return await callRepository.getUpdatedClientsByDate();
+  };
 module.exports = {
     getCallCounts,
+    getUpdatedClientsCount,
+    getUpdatedClientsGroupedByDate
 };
