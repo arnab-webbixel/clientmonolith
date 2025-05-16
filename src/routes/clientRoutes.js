@@ -5,7 +5,7 @@ const upload = require('../config/multer-config');
 const callController = require('../controllers/callController');
 const {generateCalendar} = require('../controllers/calender-controller');
 const {exportClientsExcel} = require('../controllers/exportControllers');
-
+const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
 router.get('/export/excel', exportClientsExcel);
@@ -25,7 +25,7 @@ router.get('/call-counts', (req, res, next) => {
 router.get('/:id/remarks', clientController.getAllRemarks);
 
 
-router.post('/', clientController.createClient);
+router.post('/', authMiddleware, clientController.createClient);
 router.get('/', clientController.getAllClients);
 router.get('/:id', clientController.getClientById);
 router.put('/:id', clientController.updateClient);

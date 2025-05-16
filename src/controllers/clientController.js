@@ -3,7 +3,7 @@ const clientService = require('../services/client-service');
 class ClientController {
   async createClient(req, res) {
     try {
-      const client = await clientService.createClient(req.body);
+      const client = await clientService.createClient(req.body, req.user);
       return res.status(201).json({
         success: true,
         message: 'Customer added successfully',
@@ -19,14 +19,16 @@ class ClientController {
   }
 
   async getAllClients(req, res) {
+    const query = req.query; // search could be by name, email, 
     try {
-      const clients = await clientService.getAllClients();
+      const data = await clientService.getAllClients(query);
       return res.status(200).json({
         success: true,
         message: 'All customers fetched successfully',
-        data: clients
+        ...data,
       });
     } catch (error) {
+      console.log("error in get all clents: ", error)
       return res.status(500).json({
         success: false,
         message: error.message

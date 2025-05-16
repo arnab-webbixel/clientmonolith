@@ -2,10 +2,29 @@ const pipelineService = require('../services/pipelineService');
 
 const createPipeline = async (req, res) => {
   try {
-    const pipeline = await pipelineService.createPipeline(req.body);
-    res.status(201).json({ success: true, data: pipeline });
+    const { name, type, price, company_name , pipeline_status } = req.body;
+    const { user_id, role, staffId, staffName, email } = req.user;
+    const newPipeline = await pipelineService.createPipeline({
+      name,
+      type,
+      price,
+      company_name,
+      pipeline_status,  
+      added_by: {
+        user_id,
+        role,
+        staffId,          // if you prefer the DB id
+        name: staffName,  // snapshot so you don’t need extra calls later
+        email
+      }
+    });
+
+    res.status(201).json({
+      success: true,
+      data: newPipeline
+    });
   } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
+    console.log(err)
   }
 };
 
@@ -28,6 +47,8 @@ const getByStatus = async (req, res) => {
 };
 
 const updatePipeline = async (req, res) => {
+  console.log(req.body)
+  console.log(req.params.id)
   try {
     const updated = await pipelineService.updatePipeline(req.params.id, req.body);
     res.status(200).json({ success: true, data: updated });

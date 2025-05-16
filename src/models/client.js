@@ -69,6 +69,12 @@ const clientSchema = new mongoose.Schema({
   customer_id: {
       type: String, 
      default : null
+  },
+   added_by: {
+    id: { type: String, required: true },
+    role: { type: String, enum: ['admin', 'staff'], required: true },
+    name: { type: String },
+    email: { type: String }
   }
 }, {
   timestamps: true, 

@@ -72,8 +72,10 @@ class CalendarService {
 
     clients.forEach(client => {
       const scheduleDate = new Date(client.schedule_date);
-
-      const remarksText = client.remarks?.map(r => r.comment || 'No comment').join('\n') || 'No remarks available';
+      const latestRemark = client.remarks
+        .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
+        .shift();
+       const remarksText = latestRemark ? latestRemark.comment : 'No remarks available';
 
       const groupInfo = groupBy
         ? (groupBy === 'month'

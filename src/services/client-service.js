@@ -22,9 +22,16 @@ class ClientService {
     }
   }
 
-  async createClient(clientData) {
+  async createClient(data, user) {
     try {
-      const client = await clientRepository.createClient(clientData);
+      const client = await clientRepository.createClient({...data, 
+         added_by: {
+          id: user.id,
+          role: user.role,
+          name: user.name || null,
+          email: user.email
+        }}
+      );
 
       // After client is created, send a notification via RabbitMQ
       const message = JSON.stringify({
@@ -43,8 +50,40 @@ class ClientService {
     }
   }
 
-  async getAllClients() {
-    return await clientRepository.getAllClients();
+  async getAllClients({ page, limit, search, call_type, status, schedule_date }) {
+    try {
+
+      const pageNum = Math.max(1, parseInt(page, 10) || 1);
+      const limitNum = Math.max(1, parseInt(limit, 10) || 10);
+      const skip = (pageNum - 1) * limitNum;
+
+      const filter = {};
+
+      if (search) {
+        const term = search.trim();
+        filter.$or = [
+          { name: new RegExp(term, 'i') },
+          { email: new RegExp(term, 'i') }
+        ];
+      }
+
+      if (call_type) filter.call_type = call_type;
+      if (status) filter.status = status;
+      if (schedule_date) {
+        const isoDateRE = /^\d{4}-\d{2}-\d{2}$/;
+        if (!isoDateRE.test(schedule_date)) {
+          throw new Error("Invalid schedule_date format. Use 'YYYY-MM-DD'.");
+        }
+        // to match on a specific date (ignoring time) we can do a day-range
+        const d = new Date(schedule_date);
+        const next = new Date(d);
+        next.setDate(d.getDate() + 1);
+        filter.schedule_date = { $gte: d, $lt: next };
+      }
+      return await clientRepository.getAllClients({ limit: limitNum, page: pageNum, skip, filter });
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getClientById(clientId) {
@@ -73,7 +112,7 @@ class ClientService {
     }
     return await clientRepository.addRemark(clientId, remark);
   }
-   // for bulk upload only
+  // for bulk upload only
   async bulkCreateClients(clients) {
     return await Promise.all(
       clients.map(async (clientData) => {
@@ -92,10 +131,10 @@ class ClientService {
     return client.remarks.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sorting remarks by date in ascending order
   }
 
-  async clientFilter(queryParams){
+  async clientFilter(queryParams) {
     const { callType, status, start, end } = queryParams;
     const filter = {};
-  
+
     if (callType) filter.call_type = callType;
     if (status) filter.status = status;
     if (start || end) {
@@ -103,7 +142,7 @@ class ClientService {
       if (start) filter.updatedAt.$gte = new Date(start);
       if (end) filter.updatedAt.$lte = new Date(end);
     }
-  
+
     return await getClients(filter);
   }
 }
